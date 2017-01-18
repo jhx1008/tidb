@@ -370,7 +370,7 @@ func NewDomain(store kv.Storage, lease time.Duration) (d *Domain, err error) {
 func (do *Domain) LoadPrivilegeLoop(ctx context.Context, c chan<- error) {
 	do.privHandle = &privileges.Handle{}
 	err := do.privHandle.Update(ctx)
-	c <- err
+	c <- errors.Trace(err)
 	if err != nil {
 		return
 	}

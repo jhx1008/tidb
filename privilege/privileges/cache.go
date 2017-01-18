@@ -263,6 +263,9 @@ func (p *MySQLPrivilege) decodeColumnsPrivTableRow(row *ast.Row, fs []*ast.Resul
 
 func decodeSetToPrivilege(s types.Set) (mysql.PrivilegeType, error) {
 	var ret mysql.PrivilegeType
+	if s.Name == "" {
+		return ret, nil
+	}
 	for _, str := range strings.Split(s.Name, ",") {
 		priv, ok := mysql.SetStr2Priv[str]
 		if !ok {
